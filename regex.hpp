@@ -38,12 +38,17 @@ class Regex {
 		RegexType getType();	
 		//display
 		void printReg();
+		void printRegTree();
 	private:
 		std::string nameList[8] = {"UNION", "PLUS", "STAR", "QUESTION", "BRACKET", "CONCATENATION", "TOKEN", "EMPTY"};
 		RegexType type;
 		std::string name;
 		Regex *memberA;
 		Regex *memberB;
+
+		int printRecursion=0;
+		void printRegTreePrivate();
+		void printTabs();
 
 };
 
