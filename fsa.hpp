@@ -4,6 +4,7 @@
 #include<vector>
 #include<iostream>
 #include<string>
+#include<algorithm>
 
 typedef struct state state;
 typedef struct arrow {
@@ -24,8 +25,9 @@ class Fsa {
 		Fsa();
 
 		// -- public functions
-		void push_state();
-		void delete_state();
+		state *empty_state(int);
+		void push_state(state&);
+		void delete_state(state&);
 		void add_arrow(state, state, char);
 
 
@@ -34,7 +36,8 @@ class Fsa {
 		int cardinal; // number of states
 		std::vector<char> alphabet;
 		std::vector<state> states;
-		state &initState;
+		state initState;
+		arrow nullarrow;
 
 };
 
