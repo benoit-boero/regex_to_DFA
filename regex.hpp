@@ -2,9 +2,9 @@
 #define REGEX_HPP
 
 #include<string>
-#include<optional>
 #include<iostream>
 #include<fstream>
+#include"fsa.hpp"
 
 enum RegexType {
 	UNION,
@@ -17,6 +17,10 @@ enum RegexType {
 	EMPTY
 };
 
+extern std::string nameList[8];
+extern Fsa parser;
+extern bool parserInitialized;
+
 class Regex {
 	public:
 
@@ -25,7 +29,9 @@ class Regex {
 		Regex(RegexType, std::string); // Create Token regex
 		Regex(std::string); // Create Regex from file
 		Regex(RegexType, Regex*);
-	       	Regex(RegexType, Regex*, Regex*);	
+	       	Regex(RegexType, Regex*, Regex*);
+		// -- destructor
+		virtual ~Regex();	
 		// -- public functions
 		// operators
 		Regex *bracket();
@@ -40,9 +46,9 @@ class Regex {
 		void printReg();
 		void printRegTree();
 	private:
-		std::string nameList[8] = {"UNION", "PLUS", "STAR", "QUESTION", "BRACKET", "CONCATENATION", "TOKEN", "EMPTY"};
 		RegexType type;
 		std::string name;
+		int numberOfMembers=0;
 		Regex *memberA;
 		Regex *memberB;
 

@@ -8,7 +8,7 @@
 
 typedef struct state state;
 typedef struct arrow {
-	char key;
+	std::vector<char> keys;
 	struct state *target;
 } arrow;
 
@@ -29,16 +29,20 @@ class Fsa {
 		state *empty_state(int);
 		void push_state(state&);
 		void delete_state(state&);
-		void add_arrow(state&, state&, char);
-
-
-
-	private:
+		void add_arrow(state&, state&, std::vector<char>);
+		void add_arrow_key(int, int, std::vector<char>);
+		state& consume(state& , char);
+		
+		// -- public members
 		int cardinal; // number of states
 		std::vector<char> alphabet;
 		std::vector<state> states;
 		state initState;
+		state errorState;
 		arrow nullarrow;
+
+
+	private:
 
 };
 
