@@ -28,7 +28,7 @@ class Fsa {
 		state *empty_state(int);
 		void push_state(state&);
 		void delete_state(state&);
-		void add_arrow(state, state, char);
+		void add_arrow(state&, state&, char);
 
 
 

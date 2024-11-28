@@ -23,6 +23,21 @@ void Fsa::delete_state(state& s) {
 	}
 }
 
+void Fsa::add_arrow(state& s1, state& s2, char c) {
+	auto it1 = std::find_if(states.begin(), states.end(), [s1, s2](state s){return s.serial==s1.serial||s.serial==s2.serial;});
+	if(it1==states.end()) {
+		std::cout << "Trying to add arrow between non-existant states, canceling operation." << std::endl;
+		return;
+	}
+	auto it3 = std::find(alphabet.begin(), alphabet.end(), c);
+	if(it3==alphabet.end()) {
+		std::cout << "Trying to add an arrow whom key isn't in the alphabet :" << c <<", adding it to the alphabet..." << std::endl;
+		alphabet.push_back(c);
+	}
+	arrow newArr = (arrow){c, &s2};
+	s1.quiver.push_back(newArr);
+}
+
 
 // -- private functions
 
