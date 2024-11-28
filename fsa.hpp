@@ -23,6 +23,7 @@ class Fsa {
 	public:
 		// -- constructors
 		Fsa();
+		Fsa(int);
 
 		// -- public functions
 		state *empty_state(int);

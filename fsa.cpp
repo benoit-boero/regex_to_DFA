@@ -1,8 +1,14 @@
 #include"fsa.hpp"
 
 // -- constructors
-Fsa::Fsa() : cardinal(0), alphabet({}), states({(state){1,0,{}}}), initState(states[0]), nullarrow((arrow){'\0', nullptr})
+Fsa::Fsa() : cardinal(0), alphabet({}), states({(state){0,0,{}}}), initState(states[0]), nullarrow((arrow){'\0', nullptr})
 {}
+Fsa::Fsa(int n) : cardinal(n), alphabet({}), states({(state){0,0,{}}}), initState(states[0]), nullarrow((arrow){'\0', nullptr})
+{
+	for(int i=1; i<n; i++) {
+		states.push_back((state){0,i,{}});
+	}
+}
 
 // -- public functions
 state *Fsa::empty_state(int serial) {
