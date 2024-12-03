@@ -6,11 +6,12 @@ This class provides a simple recursive implementation of the notion of regex, on
 
 The basic operators implemented are :
 
+- (*token*) : token operator, indicating that *token* is accepted.
 - (A)+ : Plus operator, indicating that A is accepted if it appears once ore more times.
 - (A)* : Star operator, same as plus but A with the added option that the empty string is recognised.
 - (A)? : Question operator, same as star but also recognize the EMPTY character.
 - (A|B) : Union operator, specifies that either A or B is acceptable.
-- AB : Concatenation operator, specifies that A needs to be followed by B in order to be recognized.
+- (AB) : Concatenation operator, specifies that A needs to be followed by B in order to be recognized.
 
 ### Regex types
 
