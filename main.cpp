@@ -8,6 +8,6 @@ int main(int argc, char **argv) {
 		Regex *reg1 = new Regex(argv[1]);
 	} else {
 		std::cout << "Usage: regex_to_dfa \"name of input file\"" << std::endl;
-	}	
+	}
 }
 
