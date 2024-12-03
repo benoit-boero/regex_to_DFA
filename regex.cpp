@@ -6,6 +6,20 @@ std::string nameList[8] = {"UNION", "PLUS", "STAR", "QUESTION", "BRACKET", "CONC
 Fsa parser = Fsa(22);
 bool parserInitialized=0;
 void initFsa() {
+	parser.get_state(2).FLAG="TOKEN";
+	parser.get_state(2).set_final();
+	parser.get_state(4).FLAG="BRACKET";
+	parser.get_state(4).set_final();
+	parser.get_state(8).FLAG="UNION_2";
+	parser.get_state(8).set_final();
+	parser.get_state(6).FLAG="UNION_1";
+	parser.get_state(6).set_final();
+	parser.get_state(12).FLAG="PLUS";
+	parser.get_state(12).set_final();
+	parser.get_state(16).FLAG="STAR";
+	parser.get_state(16).set_final();
+	parser.get_state(20).FLAG="QUESTION";
+	parser.get_state(20).set_final();
 	std::vector<char> alphanumericals = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 	for(int i=65; i<91; i++) {
 		alphanumericals.push_back(i);
@@ -54,12 +68,6 @@ void initFsa() {
 	parser.add_arrow_key(19,20,{'('});	
 	parser.add_arrow_key(19,21,{')'});	
 	parser.add_arrow_key(21,19,{'('});	
-	//
-	/*
-	parser.add_arrow_key(,,);	
-	parser.add_arrow_key(,,);	
-	parser.add_arrow_key(,,);	
-	*/
 	parserInitialized=1;
 }
 
@@ -76,15 +84,23 @@ Regex::Regex(std::string nf) : type(EMPTY), name(nameList[EMPTY]), memberA(nullp
 {
 	if(!parserInitialized)
 		initFsa();
-	char c;
 	std::ifstream input(nf);
+	std::vector<char> file_without_space;
+	char c;
 	if(input.is_open()) {
+		state cursor=parser.states[0];
 		while(c!=EOF) {
-			std::cout << c;
 			c = input.get();
+			//ignoring blank spaces
 			while(c==' '||c=='\n') {
 				c = input.get();
 			}
+			if(c!=EOF)
+				file_without_space.push_back(c);
+		}
+		for(auto it = file_without_space.rbegin(); it!=file_without_space.rend(); it++) {
+			cursor=parser.consume(cursor,*it);
+			std::cout << "char:" << *it << " Ending in state FLAGGED:" << cursor.FLAG << std::endl;
 		}
 	input.close();
 	} else {
