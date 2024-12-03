@@ -16,6 +16,14 @@ struct state {
 	bool isFinal=0;
 	int serial;
 	std::vector<arrow> quiver;
+	std::string FLAG;
+
+	void set_final() {
+		isFinal=1;
+	}
+	void set_non_final() {
+		isFinal=0;
+	}
 };
 
 class Fsa {
@@ -32,14 +40,14 @@ class Fsa {
 		void add_arrow(state&, state&, std::vector<char>);
 		void add_arrow_key(int, int, std::vector<char>);
 		state& consume(state& , char);
+		state& get_state(int);
 		
 		// -- public members
 		int cardinal; // number of states
 		std::vector<char> alphabet;
 		std::vector<state> states;
-		state initState;
-		state errorState;
-		arrow nullarrow;
+		state errorState={0,-1,{},"ERR_STATE"};
+		arrow nullarrow={{}, nullptr};
 
 
 	private:

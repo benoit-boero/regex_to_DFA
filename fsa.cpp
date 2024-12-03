@@ -1,9 +1,10 @@
 #include"fsa.hpp"
 
 // -- constructors
-Fsa::Fsa() : cardinal(0), alphabet({}), states({(state){0,0,{}}}), initState(states[0]), errorState((state){0,-1,{}}), nullarrow((arrow){{}, nullptr})
-{}
-Fsa::Fsa(int n) : cardinal(n), alphabet({}), states({(state){0,0,{}}}), initState(states[0]), errorState((state){0,-1,{}}), nullarrow((arrow){{}, nullptr})
+Fsa::Fsa() : cardinal(0), alphabet({}), states({(state){0,0,{},"INIT_STATE"}})
+{
+}
+Fsa::Fsa(int n) : cardinal(n), alphabet({}), states({(state){0,0,{},"INIT_STATE"}})
 {
 	for(int i=1; i<n; i++) {
 		states.push_back((state){0,i,{}});
@@ -52,7 +53,7 @@ void Fsa::add_arrow_key(int s1, int s2, std::vector<char> listC) {
 	for(auto c=listC.begin(); c!=listC.end(); c++) {
 		auto it3 = std::find(alphabet.begin(), alphabet.end(), *c);
 		if(it3==alphabet.end()) {
-			std::cout << "Trying to add an arrow whom key isn't in the alphabet :" << *c <<", adding it to the alphabet..." << std::endl;
+			//std::cout << "Trying to add an arrow whom key isn't in the alphabet :" << *c <<", adding it to the alphabet..." << std::endl;
 			alphabet.push_back(*c);
 		}
 	}
@@ -65,6 +66,14 @@ state& Fsa::consume(state& s, char c) {
 		return errorState;
 	else
 		return (*(*it1).target);
+}
+
+state& Fsa::get_state(int ser) {
+	for(int i=0; i<cardinal; i++) {
+		if(states[i].serial==ser)
+			return states[i];
+	}	
+	return errorState;
 }
 
 // -- private functions
